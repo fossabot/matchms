@@ -6,23 +6,28 @@ on:
 
 jobs:
   publish:
-    env:
-      token: ${{secrets.PYPI_TOKEN}}
     runs-on: ubuntu-latest
-    if: ${{env.token}} != ''
     steps:
+    - name: Check pypi token
+      env:
+        token: ${{secrets.PYPI_TOKEN}}
+      if: ${{env.token}} !== '' && ${{env.token}} !== undefined && ${{env.token}} !== null
     - uses: actions/checkout@v2
+      if: success()
     - name: Set up Python
+      if: success()
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
     - name: Install dependencies
+      if: success()
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
         python setup.py bdist_wheel
     - name: Publish package
+      if: success()
       uses: pypa/gh-action-pypi-publish@master
       with:
         user: __token__
-        password: ${{ secrets.PYPI_TOKEN }}
+        password:  ${{env.token}}
