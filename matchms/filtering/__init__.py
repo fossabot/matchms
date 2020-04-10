@@ -1,5 +1,4 @@
 from .add_adduct import add_adduct
-from .clean_inchis import clean_inchis
 from .correct_charge import correct_charge
 from .derive_ionmode import derive_ionmode
 from .default_filters import default_filters
@@ -14,7 +13,6 @@ from .select_by_relative_intensity import select_by_relative_intensity
 
 __all__ = [
     "add_adduct",
-    "clean_inchis",
     "correct_charge",
     "default_filters",
     "derive_ionmode",
