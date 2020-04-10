@@ -3,6 +3,9 @@ import numpy
 
 def select_by_relative_intensity(spectrum_in, intensity_from=0.0, intensity_to=1.0):
 
+    """select a range of intensities based on intensity_from and
+    intensity_to input parameters (both are fractions)."""
+
     spectrum = spectrum_in.clone()
 
     assert intensity_from >= 0.0, "'intensity_from' should be larger than or equal to 0."

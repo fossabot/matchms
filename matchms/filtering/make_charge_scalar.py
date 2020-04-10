@@ -1,4 +1,7 @@
 def make_charge_scalar(spectrum_in):
+    """the metadata for charge can sometimes be specified as an
+    array. this filter converts it to a scalar"""
+
     spectrum = spectrum_in.clone()
 
     # Avoid pyteomics ChargeList

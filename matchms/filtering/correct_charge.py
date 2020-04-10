@@ -2,6 +2,7 @@ import numpy
 
 
 def correct_charge(spectrum_in):
+    """correct the charge based on ionmode"""
 
     spectrum = spectrum_in.clone()
 
