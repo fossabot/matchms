@@ -8,27 +8,37 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - id: check_token
-      name: Check pypi token
+
+    - name: Initialize workflow variables
+      id: vars
+      shell: bash
+      run: |
+          HAS_TOKEN='false'
+          if [ -n $TOKEN ]; then HAS_TOKEN='true' ; fi
+          echo ::set-output name=HAS_TOKEN::${HAS_TOKEN}
       env:
-        token: ${{secrets.PYPI_TOKEN}}
-      if: ${{env.token}} !== '' && ${{env.token}} !== undefined && ${{env.token}} !== null
-      run: echo steps.check_token.exitcode
+        TOKEN: "${{ secrets.PYPI_TOKEN }}"
+
+    - name: Use vars
+      if: ${{ steps.vars.outputs.HAS_TOKEN }}
+      shell: bash
+      run: echo "Token found"
+
     - uses: actions/checkout@v2
-      if: success()
+      if: ${{ steps.vars.outputs.HAS_TOKEN }}
     - name: Set up Python
-      if: success()
+      if: ${{ steps.vars.outputs.HAS_TOKEN }}
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
     - name: Install dependencies
-      if: success()
+      if: ${{ steps.vars.outputs.HAS_TOKEN }}
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
         python setup.py bdist_wheel
     - name: Publish package
-      if: success()
+      if: ${{ steps.vars.outputs.HAS_TOKEN }}
       uses: pypa/gh-action-pypi-publish@master
       with:
         user: __token__
