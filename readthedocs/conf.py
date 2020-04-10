@@ -38,7 +38,7 @@ extensions = [
 
 apidoc_module_dir = '../matchms'
 apidoc_output_dir = './api'
-apidoc_excluded_paths = ['tests', 'readthedocs', '../matchms/utils.py']
+apidoc_excluded_paths = ['tests', 'readthedocs', 'utils.py']
 apidoc_separate_modules = True
 apidoc_module_first = True
 
