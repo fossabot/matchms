@@ -8,10 +8,12 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-    - name: Check pypi token
+    - id: check_token
+      name: Check pypi token
       env:
         token: ${{secrets.PYPI_TOKEN}}
       if: ${{env.token}} !== '' && ${{env.token}} !== undefined && ${{env.token}} !== null
+      run: echo steps.check_token.exitcode
     - uses: actions/checkout@v2
       if: success()
     - name: Set up Python
