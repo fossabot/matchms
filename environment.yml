@@ -14,6 +14,7 @@ dependencies:
   - pyyaml==5.3.1
   - scipy==1.4.1
   - pip:
+    - docstr-coverage
     - isort
     - prospector[with_pyroma]
     - pytest

@@ -57,6 +57,7 @@ setup(
     ],
     extras_require={
         'dev':  [
+            'docstr-coverage',
             'isort',
             'prospector[with_pyroma]',
             'recommonmark'
