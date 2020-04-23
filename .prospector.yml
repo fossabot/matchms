@@ -10,6 +10,7 @@ test-warnings: true
 member-warnings: false
 
 ignore-paths:
+  - calc_docstring_coverage.py
   - readthedocs
   # separator = '/' (Linux, Mac)
   - matchms/old
