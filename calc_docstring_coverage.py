@@ -1,5 +1,6 @@
 import glob
 import os
+import sys
 from docstr_coverage import get_docstring_coverage
 from pathlib import Path
 
@@ -33,7 +34,7 @@ if __name__ == "__main__":
     threshold = 80
     coverage = calc_coverage()
     if coverage > threshold:
-        exit(0)
+        sys.exit(0)
     else:
         print("Docstring coverage ({0:.0f}%) smaller than threshold ({1:.0f}%).".format(coverage, threshold))
-        exit(1)
+        sys.exit(1)
