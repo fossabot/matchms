@@ -10,16 +10,19 @@ class Spec2Vec:
         self.dictionary = gensim.corpora.Dictionary([d.words for d in documents])
 
     def __call__(self, query, reference):
-
-        def calc_vector(document):
-            bag_of_words = self.dictionary.doc2bow(document.words)
-            words = [self.dictionary[item[0]] for item in bag_of_words]
-            word_vectors = self.model.wv[words]
-
-            return numpy.mean(word_vectors, 0)
-
-        query_vector = calc_vector(query)
-        reference_vector = calc_vector(reference)
+        query_vector = self.calc_vector(query)
+        reference_vector = self.calc_vector(reference)
         cdist = scipy.spatial.distance.cosine(query_vector, reference_vector)
 
         return 1 - cdist
+
+    def calc_vector(self, document, intensity_weighting_power=None):
+        """Derive latent space vector for entire document."""
+        word_vectors = self.model.wv[document.words]
+        if intensity_weighting_power:
+            vector_size = self.model.wv.vector_size
+            word_weights = numpy.power(document.weights, intensity_weighting_power)
+            # word_weights = word_weights/numpy.sum(word_weights)  # normalize weights? better not
+            return numpy.mean(word_vectors * numpy.tile(word_weights, (vector_size, 1)).T, 0)
+
+        return numpy.mean(word_vectors, 0)
