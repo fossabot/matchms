@@ -22,7 +22,6 @@ class Spec2Vec:
         if intensity_weighting_power:
             vector_size = self.model.wv.vector_size
             word_weights = numpy.power(document.weights, intensity_weighting_power)
-            # word_weights = word_weights/numpy.sum(word_weights)  # normalize weights? better not
-            return numpy.mean(word_vectors * numpy.tile(word_weights, (vector_size, 1)).T, 0)
+            return numpy.sum(word_vectors * numpy.tile(word_weights, (vector_size, 1)).T, 0)
 
-        return numpy.mean(word_vectors, 0)
+        return numpy.sum(word_vectors, 0)
